@@ -5,17 +5,38 @@
 <div class="search">
   <%= form_tag root_path , method: :get do %>
     <%= text_field_tag :q , params[:q], placeholder: "キーワードを入力", required: true %>
-    <%= submit_tag "Tweetを検索", name: nil , class: "btn btn-success", data: { disable_with: "検索中..."} %>
+    <%= submit_tag "Tweetを検索", name: "all" , class: "btn btn-success", data: { disable_with: "検索中..."} %>
+    <%= submit_tag "ポジティブなTweetを検索", name: "pos" , class: "btn btn-warning", data: { disable_with: "検索中..."} %>
+    <%= submit_tag "ネガティブなTweetを検索", name: "neg" , class: "btn btn-primary", data: { disable_with: "検索中..."} %>
   <% end %>
 </div>
 <div class="search-result">
   <% if @words.present? %>
     <div class="alert alert-info">
       <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-      "<%= params[:q] %>"と一緒にTweetされた言葉
+      Tweetの検索に成功しました
     </div>
-    
+    "<%= params[:q] %>"と一緒にTweetされた言葉
     <%= pie_chart (@words) %>
+    
+<div class="panel panel-info">
+  <div class="panel-heading">
+    word一覧
+  </div>
+    
+  <div class="panel-body">
+    <table class="table table-condensed table-hover">
+      <tbody>
+        <% @words.each do |key,value| %>        
+          <tr>
+              <td><%= key %></span></td>
+              <td><%= value %></span></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>    
     
     
   <% elsif params[:q].present? %>
@@ -25,3 +46,4 @@
     </div>
   <% end %>
 </div>
+

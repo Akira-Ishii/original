@@ -16,11 +16,28 @@ class TweetsController < ApplicationController
            config.access_token_secret = 'MnCNeW2nLhvc8D7f6KaGDkgEWH9bbN5HJl5kky8QwYjdR'
     end
     
-    result_tweets = @client.search(params[:q], 
-                                   count: 5, 
+    if params[:pos]
+    result_tweets = @client.search(params[:q] + " :)", 
+                                   count: 100, 
                                    result_type: "recent",  
                                    exclude: "retweets", 
                                    since_id: 0)
+                                   
+    elsif params[:neg]
+    result_tweets = @client.search(params[:q] + " :(", 
+                                   count: 100, 
+                                   result_type: "recent",  
+                                   exclude: "retweets", 
+                                   since_id: 0)     
+    else
+    result_tweets = @client.search(params[:q], 
+                                   count: 100, 
+                                   result_type: "recent",  
+                                   exclude: "retweets", 
+                                   since_id: 0)     
+    end
+    
+    
     texts = []
     
     result_tweets.each do |t|
