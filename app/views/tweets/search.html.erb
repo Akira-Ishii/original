@@ -1,0 +1,27 @@
+<h1>キーワードでTweetを検索</h1>
+
+
+
+<div class="search">
+  <%= form_tag root_path , method: :get do %>
+    <%= text_field_tag :q , params[:q], placeholder: "キーワードを入力", required: true %>
+    <%= submit_tag "Tweetを検索", name: nil , class: "btn btn-success", data: { disable_with: "検索中..."} %>
+  <% end %>
+</div>
+<div class="search-result">
+  <% if @words.present? %>
+    <div class="alert alert-info">
+      <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+      "<%= params[:q] %>"と一緒にTweetされた言葉
+    </div>
+    
+    <%= pie_chart (@words) %>
+    
+    
+  <% elsif params[:q].present? %>
+    <div class="alert alert-danger">
+      <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+      検索したTweetはありません
+    </div>
+  <% end %>
+</div>
