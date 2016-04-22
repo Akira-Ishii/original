@@ -16,7 +16,15 @@
       <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
       Tweetの検索に成功しました
     </div>
-    "<%= params[:q] %>"と一緒にTweetされた言葉
+    
+    <% if params[:pos] %>
+      "<%= params[:q] %>"を含むポジティブなツイートの頻出後
+    <% elsif  params[:neg] %>
+      "<%= params[:q] %>"を含むネガティブなツイートの頻出後
+    <% else %>
+      "<%= params[:q] %>"と一緒にTweetされた言葉
+    <% end %>
+    
     <%= pie_chart (@words) %>
     
 <div class="panel panel-info">

@@ -2,18 +2,13 @@ class TweetsController < ApplicationController
   
  require "twitter"
 
-  
   def search
-   
- 
-   
-   
    if params[:q]
     @client = Twitter::REST::Client.new do |config|
-           config.consumer_key = 'hoOxFTeWweT9aI5vXtJ1eLS8Q'
-           config.consumer_secret = 'UbHjixrWz2zUxGLAZscoWlVZGs95GbBOa1WcIwn2dUfHh6fZYt'
-           config.access_token = '2472156692-Q4jBr1CgPalNP9M7xBg2mI5NfzcQqlh1MRc0vbL'
-           config.access_token_secret = 'MnCNeW2nLhvc8D7f6KaGDkgEWH9bbN5HJl5kky8QwYjdR'
+       config.consumer_key = 'hoOxFTeWweT9aI5vXtJ1eLS8Q'
+       config.consumer_secret = 'UbHjixrWz2zUxGLAZscoWlVZGs95GbBOa1WcIwn2dUfHh6fZYt'
+       config.access_token = '2472156692-Q4jBr1CgPalNP9M7xBg2mI5NfzcQqlh1MRc0vbL'
+       config.access_token_secret = 'MnCNeW2nLhvc8D7f6KaGDkgEWH9bbN5HJl5kky8QwYjdR'
     end
     
     if params[:pos]
@@ -37,7 +32,6 @@ class TweetsController < ApplicationController
                                    since_id: 0)     
     end
     
-    
     texts = []
     
     result_tweets.each do |t|
@@ -46,26 +40,24 @@ class TweetsController < ApplicationController
      
     @texts = texts               
     
-   words = []
+    words = []
    
-   nm = Natto::MeCab.new 
+    nm = Natto::MeCab.new 
    
-   texts.each do |c|
-    
-    res = nm.parse(c)
-    res.split("\n").each do |n|
-     if n.include?("名詞")
-      word = n.split("\t")[0]
-      words << word
+    texts.each do |c|
+     res = nm.parse(c)
+     res.split("\n").each do |n|
+      if n.include?("名詞")
+       word = n.split("\t")[0]
+       words << word
+      end
      end
-     
     end
-   end
    
    word_count = {}
    
    words.each do |key|
-    word_count[key] ||= 1
+    word_count[key] ||= 0
     word_count[key] += 1
    end
     
